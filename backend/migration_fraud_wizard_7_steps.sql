@@ -1,0 +1,15 @@
+ALTER TABLE fraud_cases
+  ADD COLUMN IF NOT EXISTS case_source_other TEXT,
+  ADD COLUMN IF NOT EXISTS has_claim BOOLEAN DEFAULT false,
+  ADD COLUMN IF NOT EXISTS claim_status VARCHAR(50),
+  ADD COLUMN IF NOT EXISTS suspension_date TIMESTAMP,
+  ADD COLUMN IF NOT EXISTS suspension_reason TEXT,
+  ADD COLUMN IF NOT EXISTS risk_level VARCHAR(50);
+
+CREATE TABLE IF NOT EXISTS case_action_logs (
+  id SERIAL PRIMARY KEY,
+  fraud_case_id INTEGER REFERENCES fraud_cases(id) ON DELETE CASCADE,
+  responsible_user VARCHAR(150),
+  status VARCHAR(100),
+  action_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,20 @@
+This source package does not include a prebuilt dist folder.
+
+LOCAL DEVELOPMENT
+1. In the project root:
+   npm install
+   npm run dev
+2. In a second terminal, inside backend:
+   npm install
+   npm run dev
+
+PRODUCTION / IIS
+1. In the project root run:
+   npm install
+   npm run build
+2. Deploy the generated dist folder to IIS.
+3. Restart the backend after deploying the updated backend code.
+
+Fraud Assessment Excel export does NOT require an additional npm library.
+The original Excel template is included at:
+backend/templates/fraud-assessment-01-template.xlsx

@@ -1,0 +1,47 @@
+services:
+  fraud-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fraud-backend
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+
+      # Database
+      DB_TYPE: mssql
+      MSSQL_HOST: host.docker.internal
+      MSSQL_PORT: 14330
+      MSSQL_DATABASE: FraudManagementDB
+      MSSQL_USER: fraud_app_user
+      MSSQL_PASSWORD: FraudApp@12345!
+      MSSQL_ENCRYPT: "false"
+      MSSQL_TRUST_SERVER_CERTIFICATE: "true"
+
+      # Authentication
+      AUTH_MODE: local
+      JWT_SECRET: CHANGE_THIS_TO_A_LONG_RANDOM_SECRET_AT_LEAST_32_CHARS
+      JWT_EXPIRES_IN: 8h
+      LOCAL_AUTH_BOOTSTRAP: "true"
+      LOCAL_AUTH_RESET_PASSWORDS: "false"
+      LOCAL_AUTH_USERS: admin@arabianshield.com|System Admin|admin|Admin@12345!;Al.Aldakhel@arabianshield.com|Al Aldakhel|user|ChangeMe@12345!
+
+      # CORS
+      FRONTEND_URL: http://localhost:8080
+    ports:
+      - "5000:5000"
+
+  fraud-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_BASE_URL: /api
+        VITE_AUTH_MODE: local
+    container_name: fraud-frontend
+    restart: unless-stopped
+    depends_on:
+      - fraud-backend
+    ports:
+      - "8080:80"

@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.vite/
+.env
+.env.local
+.env.*.local
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+backend/node_modules/
+backend/.env
+# Deployment packages
+FraudDeploy_*.zip
+
+# Security scan output
+security-results/
+
+# Local environment preparation
+backend_env_mssql_prepare.txt
